@@ -6,6 +6,9 @@ A free and user-friendly Orthomosaic viewer and editor using Google Maps tools f
 * [Getting Started](#getting-started)
 * [Generating Tiles](#generating-tiles)
 
+![alt text](https://raw.githubusercontent.com/jmprovencher/orthomosaic-viewer/master/demo_img.png)
+
+
 ## Getting Started
 
 * Add your Google Maps API KEY in the orthoViewer.html in the google maps javascript script.
