@@ -1,120 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <head>
-    <title>Overlaying an image map type</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-
-    <div id="map"></div>
-
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script
-    src="https://maps.googleapis.com/maps/api/js?key='Enter your key here'&libraries=geometry,drawing">
-    </script>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src='MeasureTool.min.js'></script>
-<script type="text/javascript"
-        src=" https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-
-
-
-
-    <style>
-    @media print{
-      #toolbar{
-        display:none;
-      }
-      .range-field{
-        display: none;
-      }
-
-    }
-    .dropdown-content{
-      display: block;
-      opacity: 100;
-    }
-
-    .fixed-action-btn{
-      position: absolute;
-    }
-    #measureButton{
-      background-color:grey;
-    }
-  .base-line{
-    stroke: #fff200;
-  }
-  #tools-button{
-    top:23px;
-    bottom: initial;
-  }
-  #color-button{
-       top: 175px;
-    bottom: initial;
-  }
-   #drawing-tools-button{
-    top:100px;
-    bottom: initial;
-  }
-  #deleteButton{
-      top: 300px;
-      right:23px;
-    bottom: initial;
-  }
-    #deleteAllButton{
-      top: 325px;
-      right:23px;
-    bottom: initial;
-  }
-  #handButton{
-      top: 250px;
-      right:23px;
-    bottom: initial;
-  }
-   #printButton{
-      top: 275px;
-      right:23px;
-    bottom: initial;
-  }
-    input[type=range]::-webkit-slider-thumb {
-    background-color: cyan;
-  }
-  input[type=range]::-moz-range-thumb {
-    background-color: cyan;
-  }
-  input[type=range]::-ms-thumb {
-    background-color: cyan;
-  }
-
-  /***** These are to edit the thumb and the text inside the thumb *****/
-  input[type=range] + .thumb {
-    background-color: #dedede;
-  }
-  input[type=range] + .thumb.active .value {
-    color: black;
-  }
-  
-    </style>
-    <script type="text/javascript">
-       var drawingManager;
+     var drawingManager;
             var selectedShape;
             var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
             var selectedColor;
@@ -150,10 +34,10 @@ var RECTANGLE = google.maps.drawing.OverlayType.RECTANGLE;
 var CIRCLE = google.maps.drawing.OverlayType.CIRCLE;
 var POLYGON = google.maps.drawing.OverlayType.POLYGON;
 var POLYLINE = google.maps.drawing.OverlayType.POLYLINE;
-var MARKER = google.maps.drawing.OverlayType.MARKER; 
+var MARKER = google.maps.drawing.OverlayType.MARKER;
 
 var maptiler = new google.maps.ImageMapType({
-    getTileUrl: function(coord, zoom) { 
+    getTileUrl: function(coord, zoom) {
         var proj = map.getProjection();
         var z2 = Math.pow(2, zoom);
         var tileXSize = 256 / z2;
@@ -181,7 +65,7 @@ var maptiler = new google.maps.ImageMapType({
                     if (selectedShape.type !== 'marker') {
                         selectedShape.setEditable(false);
                     }
-                    
+
                     selectedShape = null;
                 }
             }
@@ -192,7 +76,7 @@ var maptiler = new google.maps.ImageMapType({
                     shape.setEditable(true);
                     selectColor(shape.get('fillColor') || shape.get('strokeColor'));
                 }
-                
+
                 selectedShape = shape;
             }
 
@@ -339,9 +223,9 @@ overlay.setMap(map);
                     polylineDrawing = false;
 
                     var newShape = e.overlay;
-                    
+
                     newShape.type = e.type;
-                    
+
                     if (e.type !== google.maps.drawing.OverlayType.MARKER) {
                         // Switch back to non-drawing mode after drawing a shape.
                         drawingManager.setDrawingMode(null);
@@ -385,8 +269,8 @@ overlay.setMap(map);
                 // map is clicked.
                 google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
                   google.maps.event.addListener(
-            drawingManager, 
-            'overlaycomplete', 
+            drawingManager,
+            'overlaycomplete',
             onNewShape);
                 google.maps.event.addListener(map, 'click', clearSelection);
 
@@ -399,75 +283,75 @@ selectColor('yellow');
 
 
 
- 
+
     function typeDesc(type) {
         switch (type) {
         case RECTANGLE:
             return "rectangle";
- 
+
         case CIRCLE:
             return "circle";
- 
+
         case POLYGON:
             return "polygon";
- 
+
         case POLYLINE:
             return "polyline";
- 
+
         case MARKER:
             return "marker";
- 
+
         case null:
             return "null";
- 
+
         default:
             return "UNKNOWN GOOGLE MAPS OVERLAY TYPE";
         }
     }
- 
+
     // json reading
- 
+
     function jsonReadPath(jsonPath) {
         var path = new google.maps.MVCArray();
- 
+
         for (var i = 0; i < jsonPath.path.length; i++) {
-            var latlon = 
+            var latlon =
                 new google.maps.LatLng(jsonPath.path[i].lat, jsonPath.path[i].lon);
             path.push(latlon);
         }
- 
+
         return path;
     }
- 
+
     function jsonReadRectangle(jsonRectangle) {
         var jr = jsonRectangle;
         var southWest = new google.maps.LatLng(
-            jr.bounds.southWest.lat, 
+            jr.bounds.southWest.lat,
             jr.bounds.southWest.lon);
         var northEast = new google.maps.LatLng(
-            jr.bounds.northEast.lat, 
+            jr.bounds.northEast.lat,
             jr.bounds.northEast.lon);
         var bounds = new google.maps.LatLngBounds(southWest, northEast);
- 
+
         var rectangleOptions = {
             bounds: bounds,
             editable: false,
             fillColor: jr.color,
             map: _map
         };
-     
+
         var rectangle = new google.maps.Rectangle(rectangleOptions);
- 
+
         return rectangle;
     }
- 
+
     function jsonReadCircle(jsonCircle) {
         var jc = jsonCircle;
- 
+
         var center = new google.maps.LatLng(
-            jc.center.lat, 
+            jc.center.lat,
             jc.center.lon);
- 
+
         var circleOptions = {
             center: center,
             radius: parseFloat(jc.radius),
@@ -475,50 +359,50 @@ selectColor('yellow');
             fillColor: jc.color,
             map: _map
         };
-     
+
         var circle = new google.maps.Circle(circleOptions);
- 
+
         return circle;
     }
- 
+
     function jsonReadPolyline(jsonPolyline) {
         var path = jsonReadPath(jsonPolyline);
- 
+
         var polylineOptions = {
-            path: path, 
+            path: path,
             editable: false,
             strokeColor: jsonPolyline.color,
             map: _map
         };
- 
+
         var polyline = new google.maps.Polyline(polylineOptions);
- 
+
         return polyline;
     }
- 
+
     function jsonReadPolygon(jsonPolygon) {
         var paths = new google.maps.MVCArray();
- 
+
         for (var i = 0; i < jsonPolygon.paths.length; i++) {
             var path = jsonReadPath(jsonPolygon.paths[i]);
             paths.push(path);
         }
- 
+
         var polygonOptions = {
-            paths: paths, 
+            paths: paths,
             editable: false,
             fillColor: jsonPolygon.color,
             map: _map
         };
- 
+
         var polygon = new google.maps.Polygon(polygonOptions);
- 
+
         return polygon;
     }
- 
-    function jsonRead(json) { 
+
+    function jsonRead(json) {
         var jsonObject = eval("(" + json + ")");
- 
+
         for (i = 0; i < jsonObject.shapes.length; i++)
         {
             switch (jsonObject.shapes[i].type) {
@@ -528,21 +412,21 @@ selectColor('yellow');
                 newShapeAddListeners(rectangle);
                 shapesAdd(rectangle);
                 break;
- 
+
             case CIRCLE:
                 var circle = jsonReadCircle(jsonObject.shapes[i]);
                 newShapeSetProperties(circle, CIRCLE);
                 newShapeAddListeners(circle);
                 shapesAdd(circle);
                 break;
- 
+
             case POLYLINE:
                 var polyline = jsonReadPolyline(jsonObject.shapes[i]);
                 newShapeSetProperties(polyline, POLYLINE);
                 newShapeAddListeners(polyline);
                 shapesAdd(polyline);
                 break;
- 
+
             case POLYGON:
                 var polygon = jsonReadPolygon(jsonObject.shapes[i]);
                 newShapeSetProperties(polygon, POLYGON);
@@ -552,119 +436,119 @@ selectColor('yellow');
             }
         }
     }
- 
+
     // json writing
- 
+
     function comma(i) {
         return (i > 0) ? ',' : '';
     }
- 
+
     function jsonMakeLatlon(latlon) {
-        var buf = 
+        var buf =
             '"lat":"' + latlon.lat() + '","lon":"' + latlon.lng() + '"';
- 
+
         return buf;
     }
- 
+
     function jsonMakeBounds(bounds) {
-        var buf = 
+        var buf =
             '"bounds":{'
             + '"northEast":{' + jsonMakeLatlon(bounds.getNorthEast()) + '},'
             + '"southWest":{' + jsonMakeLatlon(bounds.getSouthWest()) + '}'
             + '}';
- 
+
         return buf;
     }
- 
+
     function jsonMakeType(type) {
         var buf = '"type":"' + typeDesc(type) + '"';
- 
+
         return buf;
     }
- 
+
     function jsonMakeColor(color) {
         var buf = '"color":"' + color + '"';
- 
+
         return buf;
     }
- 
+
     function jsonMakeCenter(center) {
         var buf = '"center":{' + jsonMakeLatlon(center) + '}';
- 
+
         return buf;
     }
- 
+
     function jsonMakeRadius(radius) {
         var buf = '"radius":"' + radius + '"';
- 
+
         return buf;
     }
- 
+
     function jsonMakePath(path) {
         var n = path.getLength();
- 
+
         var buf = '"path":[';
         for (var i = 0; i < n; i++) {
             var latlon = path.getAt(i);
- 
+
             buf += comma(i) + '{' + jsonMakeLatlon(latlon) + '}';
         }
         buf += ']';
- 
+
         return buf;
     }
- 
+
     function jsonMakePaths(paths) {
         var n = paths.getLength();
- 
+
         var buf = '"paths":[';
         for (var i = 0; i < n; i++) {
             var path = paths.getAt(i);
- 
+
             buf += comma(i) + '{' + jsonMakePath(path) + '}';
         }
         buf += ']';
- 
+
         return buf;
     }
- 
+
     function jsonMakeRectangle(rectangle) {
-        var buf = 
+        var buf =
             jsonMakeType(RECTANGLE) + ','
             + jsonMakeColor(rectangle.fillColor) + ','
             + jsonMakeBounds(rectangle.bounds);
- 
+
         return buf;
     }
- 
+
     function jsonMakeCircle(circle) {
-        var buf = 
+        var buf =
             jsonMakeType(CIRCLE) + ','
             + jsonMakeColor(circle.fillColor) + ','
             + jsonMakeCenter(circle.center) + ','
             + jsonMakeRadius(circle.radius);
- 
+
         return buf;
     }
- 
+
     function jsonMakePolyline(polyline) {
-        var buf = 
+        var buf =
             jsonMakeType(POLYLINE) + ','
             + jsonMakeColor(polyline.strokeColor) + ','
             + jsonMakePath(polyline.getPath());
- 
+
         return buf;
     }
- 
+
     function jsonMakePolygon(polygon) {
-        var buf = 
+        var buf =
             jsonMakeType(POLYGON) + ','
             + jsonMakeColor(polygon.fillColor) + ','
             + jsonMakePaths(polygon.getPaths());
- 
+
         return buf;
     }
- 
+
     function jsonMake() {
         var buf = '{"shapes":[';
         for (i = 0; i < _shapes.length; i++) {
@@ -673,54 +557,54 @@ selectColor('yellow');
             case RECTANGLE:
                 buf += comma(i) + '{' + jsonMakeRectangle(_shapes[i]) + '}';
                 break;
- 
+
             case CIRCLE:
                 buf += comma(i) + '{' + jsonMakeCircle(_shapes[i]) + '}';
                 break;
- 
+
             case POLYLINE:
                 buf += comma(i) + '{' + jsonMakePolyline(_shapes[i]) + '}';
                 break;
- 
+
             case POLYGON:
                 buf += comma(i) + '{' + jsonMakePolygon(_shapes[i]) + '}';
                 break;
             }
         }
         buf += ']}';
- 
+
         return buf;
     }
 
       function newShapeAddPathListeners(shape, path) {
         google.maps.event.addListener(
-            path, 
-            'insert_at', 
+            path,
+            'insert_at',
             function () {onShapeEdited(shape)});
         google.maps.event.addListener(
-            path, 
+            path,
             'remove_at',
             function () {onShapeEdited(shape)});
         google.maps.event.addListener(
-            path, 
+            path,
             'set_at',
             function () {onShapeEdited(shape)});
     }
- 
+
     function newShapeAddListeners(shape) {
         google.maps.event.addListener(
-            shape, 
-            'click', 
+            shape,
+            'click',
             function () {onShapeClicked(shape);});
- 
+
         switch (shape.type) {
         case RECTANGLE:
             google.maps.event.addListener(
-                shape, 
-                'bounds_changed', 
+                shape,
+                'bounds_changed',
                 function () {onShapeEdited(shape);});
             break;
- 
+
         case CIRCLE:
             google.maps.event.addListener(
                 shape,
@@ -731,15 +615,15 @@ selectColor('yellow');
                 'radius_changed',
                 function () {onShapeEdited(shape);});
             break;
- 
+
         case POLYLINE:
             var path = shape.getPath();
             newShapeAddPathListeners(shape, path);
             break;
- 
+
         case POLYGON:
             var paths = shape.getPaths();
- 
+
             var n = paths.getLength();
             for (var i = 0; i < n; i++) {
                 var path = paths.getAt(i);
@@ -762,28 +646,28 @@ selectColor('yellow');
         if (newSelection == _selection) {
             return;
         }
- 
+
         if (_selection != null) {
           if (_selection.type !== 'marker') {
             _selection.setEditable(false);
                     }
             _selection = null;
         }
- 
+
         if (newSelection != null) {
             _selection = newSelection;
                if (_selection.type !== 'marker') {
             _selection.setEditable(true);
                     }
         }
- 
+
         selectionPrint();
     }
- 
+
     function selectionClear() {
         selectionSet(null);
     }
- 
+
     function selectionDelete() {
         if (_selection != null) {
             _selection.setMap(null);
@@ -794,7 +678,7 @@ selectColor('yellow');
       function newShapeSetProperties(shape, type) {
         shape.type = type;
         shape.appId = _newShapeNextId;
- 
+
         _newShapeNextId++;
     }
 
@@ -804,7 +688,7 @@ selectColor('yellow');
 
         function shapesDelete(shape) {
         var found = false;
- 
+
         for (var i = 0; i < _shapes.length && !found; i++) {
             if (_shapes[i] === shape) {
                 _shapes.splice(i, 1);
@@ -812,7 +696,7 @@ selectColor('yellow');
             }
         }
     }
- 
+
     function shapesHideAll() {
         for (var i = 0; i < _shapes.length; i++) {
             _shapes[i].setMap(null);
@@ -824,51 +708,51 @@ selectColor('yellow');
             _shapes[i].setMap(map);
         }
     }
- 
+
     function shapesDeleteAll() {
         console.log(_shapes.length + " shapes deleted\n");
- 
+
         _shapes.splice(0, _shapes.length);
         console.log(_shapes);
     }
- 
- 
+
+
 
     // event capture
- 
+
     function onNewShape(event) {
         var shape = event.overlay;
- 
+
         newShapeSetProperties(shape, event.type);
         newShapeAddListeners(shape);
         shapesAdd(shape);
         shapesSave();
         console.log(_shapes);
         selectionSet(shape);
- 
+
         console.log("new " + typeDesc(event.type) + " created (id = "
               + shape.appId + ")\n");
     }
- 
+
     function onShapeEdited(shape) {
         console.log(shape.appId + ": shape edited\n");
         console.log('need to save');
         shapesSave();
     }
- 
+
     function onShapeClicked(shape) {
         console.log(shape.appId + ": shape clicked\n");
         selectionSet(shape);
     }
- 
+
     function onMapClicked() {
         console.log("map clicked\n");
         selectionClear();
     }
- 
+
     function onDeleteButtonClicked() {
         console.log("delete button clicked\n");
- 
+
         if (selectionIsSet()) {
             shapesDelete(_selection);
             console.log('need to save');
@@ -877,27 +761,27 @@ selectColor('yellow');
         shapesSave();
     }
 
-      function shapesSave() { 
+      function shapesSave() {
         var shapes = jsonMake();
         console.log(shapes)
-         
-        
+
+
     }
- 
+
     function onClearButtonClicked() {
         console.log("clear button clicked\n");
- 
+
         selectionClear();
         shapesHideAll();
         shapesDeleteAll();
         console.log('need to save');
     }
- 
+
     function onDrawingModeChanged() {
-        console.logDrawingMode(drawingManager); 
+        console.logDrawingMode(drawingManager);
         selectionClear();
     }
- 
+
 
 
 function savePolygon() {
@@ -1045,7 +929,7 @@ function bindDataLayerListeners(dataLayer) {
         buttonList.appendChild(visibilityButtonLi);
         fixedActionButton.appendChild(buttonList);
 
-       
+
 
         // Setup the click event listeners: simply set the map to Chicago.
         measureButton.addEventListener('click', function() {
@@ -1060,13 +944,13 @@ function bindDataLayerListeners(dataLayer) {
 
           isMeasuring = true;
           }
-       
-        }, Modernizr.passiveeventlisteners ? {passive: true} : false);
+
+        });
 
         // Setup the click event listeners: simply set the map to Chicago.
         addButton.addEventListener('click', function() {
           drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
-      })
+      });
         shapesVisible = true;
         visibilityButton.addEventListener('click', function() {
           if(shapesVisible){
@@ -1287,7 +1171,7 @@ function bindDataLayerListeners(dataLayer) {
                     setSelectedShapeColor('red');
         })
 
-            
+
 
 
 //Blue Color button
@@ -1346,14 +1230,7 @@ function bindDataLayerListeners(dataLayer) {
 
         fixedActionButton.appendChild(buttonList);
 
-      
+
 
       }
 
-
-
-
-
-    </script>
-  </body>
-</html>

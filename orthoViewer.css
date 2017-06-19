@@ -1,0 +1,82 @@
+    @media print{
+      #toolbar{
+        display:none;
+      }
+      .range-field{
+        display: none;
+      }
+
+    }
+    .dropdown-content{
+      display: block;
+      opacity: 100;
+    }
+
+    .fixed-action-btn{
+      position: absolute;
+    }
+    #measureButton{
+      background-color:grey;
+    }
+  .base-line{
+    stroke: #fff200;
+  }
+  #tools-button{
+    top:23px;
+    bottom: initial;
+  }
+  #color-button{
+       top: 175px;
+    bottom: initial;
+  }
+   #drawing-tools-button{
+    top:100px;
+    bottom: initial;
+  }
+  #deleteButton{
+      top: 300px;
+      right:23px;
+    bottom: initial;
+  }
+    #deleteAllButton{
+      top: 325px;
+      right:23px;
+    bottom: initial;
+  }
+  #handButton{
+      top: 250px;
+      right:23px;
+    bottom: initial;
+  }
+   #printButton{
+      top: 275px;
+      right:23px;
+    bottom: initial;
+  }
+    input[type=range]::-webkit-slider-thumb {
+    background-color: cyan;
+  }
+  input[type=range]::-moz-range-thumb {
+    background-color: cyan;
+  }
+  input[type=range]::-ms-thumb {
+    background-color: cyan;
+  }
+
+  /***** These are to edit the thumb and the text inside the thumb *****/
+  input[type=range] + .thumb {
+    background-color: #dedede;
+  }
+  input[type=range] + .thumb.active .value {
+    color: black;
+  }
+
+        #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
